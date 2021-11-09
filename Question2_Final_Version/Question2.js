@@ -10,7 +10,7 @@ const data = [
     {region: 'CA', model: 'C', sales: 230},
     {region: 'CA', model: 'D', sales: 400},
 ]
-
+data.sort((a, b) => b.region.localeCompare(a.region));
 var mySelect = document.getElementById('mySelect');
 var mySelect2 = document.getElementById('mySelect2');
 
@@ -51,7 +51,6 @@ mySelect.onchange = function() {
                text+="</table>";
            document.getElementById("demo").innerHTML = text;
         }
-        
     }
 
 mySelect2.onchange = function() {
@@ -94,10 +93,42 @@ mySelect2.onchange = function() {
     }
 
     function myFunction3(){
+
+        const modellist=[];
+
+        select = document.getElementById('mySelect');
+        var cur = data[0].region;
+        option = document.createElement('option');
+        option.value=option.text=data[0].region;
+        select.add(option);
+        
+        Select2 = document.getElementById('mySelect2');
+
         var text = "<table border ='1'><tr><th>Region</th><th>Model</th><th>Sales</th></tr>"
         for (let i=0;i<data.length;i++){
          text+="<tr><td>"+data[i].region+"</td><td>"+data[i].model+"</td><td>"+data[i].sales+"</td></tr>"
+         if(data[i].region!=cur){
+            option = document.createElement('option');
+            option.value=option.text=data[i].region;
+            select.add(option);
+            cur = data[i].region;
+         }
+         modellist.push(data[i].model);
         }
         text+="</table>";
-    document.getElementById("demo").innerHTML = text;
+    document.getElementById("demo").innerHTML = text;     
+
+    let uniqueChars = [...new Set(modellist)];    
+
+    for (let i=0;i<uniqueChars.length;i++){
+
+           option = document.createElement('option');
+           option.value=option.text=uniqueChars[i];
+           Select2.add(option);
+
+       }
+
     }
+
+
+
